@@ -1,3 +1,9 @@
+import os
+from fastapi import FastAPI
+from backend.lifespan import lifespan
+
+app = FastAPI(lifespan=lifespan)
+
 DATABASE_URL: str = "postgres://postgres:postgres@localhost:5432/mydb"
 REDIS_URL: str = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 SESSION_COOKIE: str = "sid"

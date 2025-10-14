@@ -17,7 +17,7 @@ class Session:
         self.id = sid
         self._data = data
 
-    @property #Decorator: some code under the hood that allows to use at a getter and setter
+    @property 
     def user_id(self):
         return self._data.get("user_id")
 
