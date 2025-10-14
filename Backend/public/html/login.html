@@ -26,10 +26,6 @@
 			background: #5a88de;
 			transition: 0.2s ease-in-out;
 		}
-
-		bttn.magenta {
-			background: #c241ce;
-		}
 	</style>
 
 	<script>
@@ -43,13 +39,18 @@
 	<body class="pink-bg">
 		<header></header>
 		<main>
-			<H1>W1D1 Live Demo</h1>
-			<p>Hello world. I am on host {{ host }} Welcome to FastAPI</p>
-			<div style="padding:20px;">
-				<a href="/signup" class="bttn magenta">Signup</a>
-				<a href="/login" class="bttn magenta">Login</a>
-			</div>
-			
+			<H1>Login Form</h1>
+			<form method="POST" action="/signup">
+                 <div>
+                    <label>Email</label>
+                    <input type="text" name="email" />
+                </div>
+                <div>
+                    <label>Password</label>
+                    <input type="password" name="password" />
+                </div>
+                <input type="submit" value="Login" />
+            </form>
 		</main>
 		<footer></footer>
 	</body>

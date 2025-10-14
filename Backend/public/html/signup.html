@@ -1,0 +1,72 @@
+<!DOCTYPE HTML5>
+
+<html>
+	<head>
+		<title>{{ title }}</title>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	</head>
+
+	<style>
+		.pink-bg {
+			background-color: #cc5d5d;
+		}
+		.bttn {
+			background: #1d54bc;
+			border-radius: 10px;
+			box-shadow: 5px 5px 5 5 #0a1d41;
+			/* border: 1px solid white; */
+			padding: 10px;
+			width:200px;
+			text-align: center;
+			color:white;
+		}
+
+		.bttn:hover {
+			cursor: pointer;
+			background: #5a88de;
+			transition: 0.2s ease-in-out;
+		}
+	</style>
+
+	<script>
+		let gate = false;
+
+		$(document).ready(function(){
+			
+		});
+	</script>
+
+	<body class="pink-bg">
+		<header></header>
+		<main>
+			<H1>Signup Form</h1>
+			<form method="POST" action="/signup">
+                <div>
+                    <label>Username</label>
+                    <input type="text" name="username" />
+                </div>
+                <div>
+                    <label>First name</label>
+                    <input type="text" name="fname" />
+                </div>
+                <div>
+                    <label>Last name</label>
+                    <input type="text" name="lname" />
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input type="text" name="email" />
+                </div>
+                <div>
+                    <label>Password</label>
+                    <input type="password" name="password" />
+                </div>
+                    <label>Confirm Password</label>
+                    <input type="password" name="password_confirmation" />
+                </div>
+                <input type="submit" value="Sign up" />
+            </form>
+		</main>
+		<footer></footer>
+	</body>
+</html>
