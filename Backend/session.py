@@ -1,4 +1,5 @@
 import json
+import random
 import uuid
 from datetime import datetime, timezone
 
@@ -8,10 +9,11 @@ class CSRFToken:
         self.ttl = 3600
 
     def generate_csrf():
-        pass
+        return f"csrf{random.randint(1000)}"
 
     def verify_csrf():
         pass
+    
 class Session:
     def __init__(self, sid: str, data: dict):
         self.id = sid

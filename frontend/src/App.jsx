@@ -4,7 +4,6 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
   // Login States
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -15,7 +14,7 @@ function App() {
   const fastapiSetup = async () => {
     console.log("We are trying to reach out to FastAPI")
     try {
-      const response = await axios.get("http://localhost:8000/react-demo")
+      const response = await axios.get("http://localhost:8000/react")
       console.log(JSON.stringify(response.data));
       setHtmlContent(response.data)
     } catch (error) {

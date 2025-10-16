@@ -1,4 +1,7 @@
 from functools import wraps
+from fastapi import Depends
+from backend.config import app
+from backend.dependencies import get_current_user
 
 def Guard(dep):
     def decorator(route):
