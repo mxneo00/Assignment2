@@ -7,7 +7,6 @@ from tortoise import models, fields
 class UserRole(str, Enum):
     USER = "user"
     ADMIN = "admin"
-    SUPERUSER = "superuser"
 
 class User(models.Model):
     user_id = fields.IntField(pk=True, unique=True)

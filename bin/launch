@@ -2,8 +2,8 @@
 
 HOST="127.0.0.1"
 DB="keiser"
-USER="josephbender"
-PASSWORD="applesaucedolphin"
+USER="katellynhyker"
+PASSWORD="password"
 DB_PORT="5432"
 
 export HOST
