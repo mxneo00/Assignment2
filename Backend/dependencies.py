@@ -3,7 +3,7 @@ from starlette.requests import Request
 from tortoise.exceptions import DoesNotExist
 
 # Custom Code
-from backend.redis import RedisAdapter
+from backend.redis.redis import RedisAdapter
 from backend.session import Session, SessionManager
 
 def get_kv_store(request: Request) -> RedisAdapter:

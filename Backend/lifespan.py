@@ -3,7 +3,7 @@ import ssl
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from tortoise import Tortoise
-from backend.redis import RedisAdapter
+from backend.redis.redis import RedisAdapter
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):

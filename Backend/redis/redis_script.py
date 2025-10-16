@@ -1,7 +1,7 @@
 import os
 import asyncio
 import asyncpg
-from backend.redis import RedisAdapter
+from backend.redis.redis import RedisAdapter
 
 async def main():
 	conn = RedisAdapter()
