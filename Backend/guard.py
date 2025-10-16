@@ -1,7 +1,5 @@
 from functools import wraps
 
-# guard_roles(*roles) -> * = packaging operator. Alt: ** = unpackaging
-
 def Guard(dep):
     def decorator(route):
         @wraps(route)

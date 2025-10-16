@@ -1,5 +1,4 @@
 import os
-
 import asyncpg
 
 # Database connection parameters retrieved from environment variables

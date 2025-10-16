@@ -1,16 +1,16 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from starlette.requests import Request
+from tortoise.exceptions import DoesNotExist
+
+# Custom Code
 from backend.redis import RedisAdapter
 from backend.session import Session, SessionManager
-import os
 
 def get_kv_store(request: Request) -> RedisAdapter:
     return request.app.state.kv_store
 
-
 def get_session_manager(request: Request) -> SessionManager:
     return request.app.state.session_manager
-
 
 def get_session(
     request: Request, session_manager: SessionManager = Depends(get_session_manager)
@@ -20,7 +20,6 @@ def get_session(
             request=request, session_manager=session_manager
         )
     return request.state.session
-
 
 async def get_current_user(request: Request, session: Session = Depends(get_session)):
     await session.load()
@@ -37,7 +36,6 @@ async def get_current_user(request: Request, session: Session = Depends(get_sess
         raise HTTPException(status_code=303, headers={"location": "/"}) from e
     return user
 
-
 def get_admin(request: Request, ctx: UserCtx = Depends(get_current_user)):
     try:
         admin = AdminCtx(ctx.user, ctx.session)
@@ -49,7 +47,6 @@ def get_admin(request: Request, ctx: UserCtx = Depends(get_current_user)):
         )
         raise HTTPException(status_code=401, detail="Not authenticated") from e
     return admin
-
 
 def get_superuser(request: Request, ctx: User = Depends(get_current_user)):
     try:
