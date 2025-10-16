@@ -1,7 +1,9 @@
 import os
-from fastapi import FastAPI
-from backend.lifespan import lifespan
 from typing import Any
+# Libraries
+from fastapi import FastAPI
+# Application Code
+from backend.lifespan import lifespan
 
 app = FastAPI(lifespan=lifespan)
 

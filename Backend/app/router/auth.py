@@ -5,7 +5,7 @@ from fastapi import APIRouter
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from tortoise.exceptions import IntegrityError
-# Custom Code
+# Application Code
 from backend.session import Session
 from backend.lifespan import lifespan
 from backend.app.models import User

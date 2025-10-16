@@ -1,10 +1,10 @@
+# Libraries
 from fastapi import APIRouter, Form, Depends
 from starlette.requests import Request
 from starlette.responses import JSONResponse
-
 from passlib.hash import bcrypt
 from tortoise.exceptions import IntegrityError
-
+# Application Code
 from backend.app.models import User
 from backend.config import app
 from backend.context import UserCtx
