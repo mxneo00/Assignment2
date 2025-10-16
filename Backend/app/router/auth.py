@@ -1,21 +1,17 @@
-import os
+# Libraries
 from passlib.hash import bcrypt
-
 from fastapi import FastAPI, Form, Depends
 from fastapi import APIRouter
 from starlette.requests import Request
 from starlette.responses import JSONResponse
-
+from tortoise.exceptions import IntegrityError
 # Custom Code
 from backend.session import Session
 from backend.lifespan import lifespan
 from backend.app.models import User
 from backend.config import app
 
-router = APIRouter(
-    prefix="/auth",
-    tags=['auth'],
-)
+router = APIRouter(prefix="/auth",tags=['auth'],)
 
 @router.get("/signup")
 async def get_signup(request: Request):
@@ -28,8 +24,10 @@ async def post_signup(
     email = Form(...),
     username = Form(...),
     password = Form(...),
-    password_confirmation = Form(...)
+    password_confirmation = Form(...),
 ):
+    if password != password_confirmation:
+        print("Invalid Password Combination")
     try:
         user = await User.create(
             username=username,
@@ -41,8 +39,8 @@ async def post_signup(
             tier="free",
         )
     except IntegrityError as e:
-        print("\033")
-    return templates.TemplateResponse("dashboard.html", {"request": request})
+        print("FAILED TO CREATE USER")
+    return {"msg": "TODO"}
 
 @router.get("/redis-set-test")
 async def redis_ping(request: Request):
@@ -59,11 +57,20 @@ async def redis_ping(request: Request):
 
 @router.get("/me")
 async def get_me(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
+    return {"msg": "TODO"}
 
-# @router.post("/login")
-# async def post_login(
-#     request: Request,
-#     email: str = Form(...),
-#     password: str = Form(...)
-# ):
+@router.get("/logout")
+async def get_me(request: Request):
+    return {"msg": "TODO"}
+
+@router.get("/change-password")
+async def get_me(request: Request):
+    return {"msg": "TODO"}
+
+@router.post("/login")
+async def post_login(
+    request: Request,
+    email: str = Form(...),
+    password: str = Form(...)
+):
+    return {"msg": "TODO"}

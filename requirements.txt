@@ -1,5 +1,4 @@
 fastapi==0.118.0
-fastapi[standard]
 pandas
 uvicorn
 asyncpg

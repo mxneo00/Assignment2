@@ -3,6 +3,8 @@ import random
 import uuid
 from datetime import datetime, timezone
 
+from backend.app.models import User
+
 class CSRFToken:
     def __init__(self, session_id, ttl = 3600):
         self.session_id = session_id
@@ -55,6 +57,5 @@ class SessionManager:
         await self.redis.delete(sid)
 
 async def get_current_user(session: Session):
-    #user = await User.get(username=session.username)
-    user = None
+    user = await User.get(username=session.username)
     return user

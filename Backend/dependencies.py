@@ -1,8 +1,8 @@
+# Libararies
 from fastapi import FastAPI, Depends
 from starlette.requests import Request
 from tortoise.exceptions import DoesNotExist
-
-# Custom Code
+# Application Code
 from backend.redis.redis import RedisAdapter
 from backend.session import Session, SessionManager
 
@@ -17,7 +17,7 @@ def get_session(
 ) -> Session:
     if not hasattr(request.state, "session"):
         request.state.session = Session(
-            request=request, session_manager=session_manager
+            request=request, session_manager=session_manager #Change
         )
     return request.state.session
 
