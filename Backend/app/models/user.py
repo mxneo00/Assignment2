@@ -13,7 +13,7 @@ class User(models.Model):
     username = fields.CharField(max_length=50, unique=True)
     email = fields.CharField(max_length=255, unique=True)
     digest = fields.CharField(max_length=128)
-    #role = fields.CharEnumField()
+    role = fields.CharField(max_length=20, default="user")
     fname = fields.CharField(max_length=50)
     lname = fields.CharField(max_length=50)
     activated_at = fields.DatetimeField(default=True)
@@ -30,5 +30,5 @@ class User(models.Model):
         table = "users"
 
     def __str__(self):
-        return f"<User {self.username}"
+        return f"<User {self.username}>"
 

@@ -4,7 +4,7 @@ from fastapi import FastAPI, Form, Depends
 from fastapi import APIRouter
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
-from starlette.responses import JSONResponse
+from starlette.responses import JSONResponse, RedirectResponse
 from tortoise.exceptions import IntegrityError
 # Application Code
 from backend.session import Session
@@ -12,7 +12,7 @@ from backend.lifespan import lifespan
 from backend.app.models import User
 from backend.config import app
 
-router = APIRouter(prefix="/auth",tags=['auth'],)
+router = APIRouter(prefix="",tags=['auth'])
 templates = Jinja2Templates(directory="backend/public/html")
 #----------------------SIGNUP-------------------------------
 @router.post("/signup")
@@ -38,7 +38,7 @@ async def post_signup(
         )
     except IntegrityError as e:
         return JSONResponse({"error": "Failed to create user"})
-    return JSONResponse({"success": True, "username": user.username})
+    return RedirectResponse(url = "/dashboard")
 #-----------------------LOGIN/LOGOUT---------------------------------
 @router.post("/login")
 async def post_login(
@@ -51,13 +51,13 @@ async def post_login(
         return JSONResponse({"error": "Invalid login credentials"})
     session = Session(request)
     await session.create_session({"user_id": user.user_id, "username": user.username})
-    return JSONResponse({"success": True, "username": user.username})
+    return RedirectResponse(url = "/dashboard")
 
 @router.get("/logout")
 async def logout(request: Request):
     session = Session(request)
     await session.delete_session()
-    return JSONResponse({"success": True, "msg": "Logged out"})
+    return RedirectResponse(url = "/")
 #------------------------USERDATA------------------------------------
 @router.get("/me")
 async def get_me(request: Request):

@@ -9,8 +9,8 @@ from backend.redis.redis import RedisAdapter
 async def lifespan(app: FastAPI):
     try: 
         await Tortoise.init(
-            db_url=f"postgres://{os.getenv("user")}:{os.getenv("password")}@localhost:5432/keiser",
-            modules={"models": ["app.models"]}
+            db_url=f"postgres://{os.getenv("user")}:{os.getenv("password")}@localhost:5432/{os.getenv("DB")}",
+            modules={"models": ["backend.app.models"]}
         )
         
         await Tortoise.generate_schema()
