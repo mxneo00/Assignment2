@@ -8,9 +8,10 @@ from backend.session import Session, SessionManager
 from backend.context import UserCtx, AdminCtx
 from backend.app.models import User
 
+#--------------- REDIS ACCESS --------------------
 def get_kv_store(request: Request) -> RedisAdapter:
     return request.app.state.kv_store
-
+#------------- SESSION MANAGEMENT -------------------------
 def get_session_manager(request: Request) -> SessionManager:
     return request.app.state.session_manager
 
@@ -22,7 +23,7 @@ def get_session(
             request=request, session_manager=session_manager #Change
         )
     return request.state.session
-
+#------------ USER/ADMIN CONTEXT ----------------------------------------------------
 async def get_current_user(request: Request, session: Session = Depends(get_session)):
     await session.load()
     if not session.data or not session.data.get("user_id"):

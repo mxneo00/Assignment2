@@ -2,6 +2,7 @@
 from passlib.hash import bcrypt
 from fastapi import FastAPI, Form, Depends
 from fastapi import APIRouter
+from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from tortoise.exceptions import IntegrityError
@@ -12,11 +13,8 @@ from backend.app.models import User
 from backend.config import app
 
 router = APIRouter(prefix="/auth",tags=['auth'],)
-
-@router.get("/signup")
-async def get_signup(request: Request):
-    return templates.TemplateResponse("signup.html", {"request": request})
-
+templates = Jinja2Templates(directory="backend/public/html")
+#----------------------SIGNUP-------------------------------
 @router.post("/signup")
 async def post_signup(
     fname = Form(...),
@@ -39,9 +37,40 @@ async def post_signup(
             tier="free",
         )
     except IntegrityError as e:
-        print("FAILED TO CREATE USER")
-    return {"msg": "TODO"}
+        return JSONResponse({"error": "Failed to create user"})
+    return JSONResponse({"success": True, "username": user.username})
+#-----------------------LOGIN/LOGOUT---------------------------------
+@router.post("/login")
+async def post_login(
+    request: Request,
+    email: str = Form(...),
+    password: str = Form(...)
+):
+    user = await User.get_or_none(email=email)
+    if not user or not bcrypt.verify(password, user.digest):
+        return JSONResponse({"error": "Invalid login credentials"})
+    session = Session(request)
+    await session.create_session({"user_id": user.user_id, "username": user.username})
+    return JSONResponse({"success": True, "username": user.username})
 
+@router.get("/logout")
+async def logout(request: Request):
+    session = Session(request)
+    await session.delete_session()
+    return JSONResponse({"success": True, "msg": "Logged out"})
+#------------------------USERDATA------------------------------------
+@router.get("/me")
+async def get_me(request: Request):
+    session = Session(request)
+    data = await session.get_session()
+    if not data: 
+        return JSONResponse({"error": "Failed to get user data"})
+    return JSONResponse({"user": data})
+
+@router.get("/change-password")
+async def changePass(request: Request):
+    return {"msg": "TODO"}
+#----------------------REDIS TEST-----------------------------------
 @router.get("/redis-set-test")
 async def redis_ping(request: Request):
     redis_conn = router.state.kv_store
@@ -54,23 +83,3 @@ async def redis_ping(request: Request):
     redis_conn = app.state.kv_store
     list_of_keys = await redis_conn.keys("user:var1:*")
     return {"redis_keys": list_of_keys}
-
-@router.get("/me")
-async def get_me(request: Request):
-    return {"msg": "TODO"}
-
-@router.get("/logout")
-async def get_me(request: Request):
-    return {"msg": "TODO"}
-
-@router.get("/change-password")
-async def get_me(request: Request):
-    return {"msg": "TODO"}
-
-@router.post("/login")
-async def post_login(
-    request: Request,
-    email: str = Form(...),
-    password: str = Form(...)
-):
-    return {"msg": "TODO"}

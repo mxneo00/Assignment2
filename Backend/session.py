@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 
 from backend.app.models import User
 
+#--------------- CSRF -------------------------
 class CSRFToken:
     def __init__(self, session_id, ttl = 3600):
         self.session_id = session_id
@@ -15,7 +16,7 @@ class CSRFToken:
 
     def verify_csrf():
         pass
-    
+#-------------- SESSION ------------------------
 class Session:
     def __init__(self, sid: str, data: dict):
         self.id = sid
@@ -55,7 +56,3 @@ class SessionManager:
 
     async def delete_session(self, sid):
         await self.redis.delete(sid)
-
-async def get_current_user(session: Session):
-    user = await User.get(username=session.username)
-    return user
